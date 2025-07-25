@@ -85,12 +85,11 @@ export default function Home() {
     <>
       <section id="home" className="relative h-screen flex items-center justify-center text-center">
         <Image
-          src="https://placehold.co/1920x1080.png"
+          src="/hero.jpg"
           alt="Background"
           fill
           style={{ objectFit: "cover" }}
           className="z-0"
-          data-ai-hint="Free Fire gameplay"
         />
         <div className="absolute inset-0 bg-black/60 z-10"></div>
         <div className="container relative z-20 px-4 py-16">
