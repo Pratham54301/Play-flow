@@ -26,6 +26,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address." }),
@@ -47,29 +48,22 @@ export default function LoginPage() {
     },
   });
 
+  const isEmailVerified = form.watch("emailVerified");
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
     const user = users.find(
       (u: any) => u.email === values.email && u.password === values.password
     );
 
-    if (users.length === 0) {
-      toast({
-        title: "Not Registered",
-        description: "Please join first before logging in.",
-        variant: "destructive",
-      });
-      router.push("/signup");
-      return;
-    }
-    
     if (!user) {
-      toast({
-        title: "Invalid Credentials",
-        description: "Please check your email and password.",
-        variant: "destructive",
-      });
-      return;
+        toast({
+          title: "Not Registered",
+          description: "You haven't joined yet. Please register first.",
+          variant: "destructive",
+        });
+        router.push("/signup");
+        return;
     }
 
     localStorage.setItem("currentUserEmail", user.email);
@@ -80,7 +74,7 @@ export default function LoginPage() {
         description: "Please verify your email to continue. We've sent you to the dashboard to do so.",
         variant: "destructive",
       });
-      router.push("/dashboard"); 
+      router.push("/dashboard");
       return;
     }
     
@@ -149,7 +143,7 @@ export default function LoginPage() {
               />
             </CardContent>
             <CardFooter className="flex flex-col gap-4">
-              <Button type="submit" className="w-full font-bold">Login</Button>
+              <Button type="submit" className="w-full font-bold" disabled={!isEmailVerified}>Login</Button>
               <div className="text-center text-sm">
                 <Link href="#" className="underline text-muted-foreground hover:text-primary">
                   Forgot your password?
