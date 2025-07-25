@@ -36,6 +36,9 @@ export default function NavigationBar() {
             <Link href="/#about">About</Link>
           </Button>
           <Button variant="ghost" asChild>
+            <Link href="/#leaderboard">Leaderboard</Link>
+          </Button>
+          <Button variant="ghost" asChild>
             <Link href="/#contact">Contact</Link>
           </Button>
         </nav>
@@ -57,6 +60,9 @@ export default function NavigationBar() {
                 </SheetClose>
                 <SheetClose asChild>
                   <Link href="/#about" className="text-lg font-medium">About</Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link href="/#leaderboard" className="text-lg font-medium">Leaderboard</Link>
                 </SheetClose>
                 <SheetClose asChild>
                   <Link href="/#contact" className="text-lg font-medium">Contact</Link>

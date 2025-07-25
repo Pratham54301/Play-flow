@@ -8,9 +8,25 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { ArrowRight, Gamepad2, Mail, MapPin, Phone, ShieldCheck, Trophy } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 function RegistrationInfoCard({ title, formLink }: { title: string, formLink: string }) {
   return (
@@ -31,8 +47,40 @@ function RegistrationInfoCard({ title, formLink }: { title: string, formLink: st
   );
 }
 
+const soloLeaderboardData = [
+  { rank: 1, name: 'ShadowStriker', played: 150, wins: 120, losses: 30, points: 4500 },
+  { rank: 2, name: 'Viper', played: 145, wins: 115, losses: 30, points: 4300 },
+  { rank: 3, name: 'Phoenix', played: 160, wins: 110, losses: 50, points: 4100 },
+  { rank: 4, name: 'Ghost', played: 130, wins: 100, losses: 30, points: 3800 },
+  { rank: 5, name: 'Reaper', played: 155, wins: 95, losses: 60, points: 3600 },
+];
+
+const duoLeaderboardData = [
+  { rank: 1, name: 'Thunder & Bolt', played: 120, wins: 100, losses: 20, points: 5200 },
+  { rank: 2, name: 'Fire & Ice', played: 115, wins: 95, losses: 20, points: 4900 },
+  { rank: 3, name: 'Night & Day', played: 130, wins: 90, losses: 40, points: 4600 },
+  { rank: 4, name: 'Salt & Pepper', played: 125, wins: 85, losses: 40, points: 4300 },
+  { rank: 5, name: 'Yin & Yang', played: 110, wins: 80, losses: 30, points: 4000 },
+];
+
+const squadLeaderboardData = [
+  { rank: 1, name: 'The Titans', played: 100, wins: 90, losses: 10, points: 6000 },
+  { rank: 2, name: 'Apex Predators', played: 95, wins: 85, losses: 10, points: 5700 },
+  { rank: 3, name: 'Cyber Warriors', played: 105, wins: 80, losses: 25, points: 5400 },
+  { rank: 4, name: 'Dragon Slayers', played: 90, wins: 75, losses: 15, points: 5100 },
+  { rank: 5, name: 'Ghost Platoon', played: 110, wins: 70, losses: 40, points: 4800 },
+];
+
 
 export default function Home() {
+  const [leaderboardMode, setLeaderboardMode] = useState('Solo');
+
+  const leaderboardData = {
+    Solo: soloLeaderboardData,
+    Duo: duoLeaderboardData,
+    Squad: squadLeaderboardData,
+  }[leaderboardMode];
+
   return (
     <>
       <section id="home" className="relative h-screen flex items-center justify-center text-center">
@@ -111,6 +159,58 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <section id="leaderboard" className="py-12 md:py-24 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-extrabold tracking-tighter sm:text-5xl">
+              Leaderboard
+            </h2>
+            <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
+              Check out the top players and teams dominating the competition.
+            </p>
+          </div>
+          <div className="max-w-md mx-auto mb-8">
+            <Select onValueChange={setLeaderboardMode} defaultValue={leaderboardMode}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a mode" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Solo">Solo</SelectItem>
+                <SelectItem value="Duo">Duo</SelectItem>
+                <SelectItem value="Squad">Squad</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="bg-secondary/50 border border-border rounded-lg overflow-hidden">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[100px] text-center">Rank</TableHead>
+                  <TableHead>Player Name</TableHead>
+                  <TableHead className="text-center">Matches</TableHead>
+                  <TableHead className="text-center">Wins</TableHead>
+                  <TableHead className="text-center">Losses</TableHead>
+                  <TableHead className="text-right">Points</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {leaderboardData.map((player) => (
+                  <TableRow key={player.rank} className="hover:bg-accent/50">
+                    <TableCell className="font-medium text-center">{player.rank}</TableCell>
+                    <TableCell>{player.name}</TableCell>
+                    <TableCell className="text-center">{player.played}</TableCell>
+                    <TableCell className="text-center">{player.wins}</TableCell>
+                    <TableCell className="text-center">{player.losses}</TableCell>
+                    <TableCell className="text-right">{player.points}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+      </section>
+
 
       <section id="contact" className="py-12 md:py-24 bg-background text-foreground">
         <div className="container mx-auto px-4">
