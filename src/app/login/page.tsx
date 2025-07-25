@@ -25,10 +25,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address." }),
   password: z.string().min(1, { message: "Password is required." }),
+  emailVerified: z.literal(true, {
+    errorMap: () => ({ message: "You must confirm your email is verified." }),
+  }),
 });
 
 export default function LoginPage() {
@@ -39,6 +43,7 @@ export default function LoginPage() {
     defaultValues: {
       email: "",
       password: "",
+      emailVerified: false,
     },
   });
 
@@ -119,6 +124,26 @@ export default function LoginPage() {
                       <Input type="password" {...field} />
                     </FormControl>
                     <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="emailVerified"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                     <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel>
+                        I confirm my email is verified
+                      </FormLabel>
+                      <FormMessage />
+                    </div>
                   </FormItem>
                 )}
               />
