@@ -53,11 +53,6 @@ export default function Home() {
             <p className="mt-4 max-w-xl mx-auto text-lg text-gray-300 md:text-xl">
               The ultimate platform for eSports payments and tournaments. Join today and start your journey to the top.
             </p>
-            <div className="mt-8 flex justify-center">
-              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-8 py-6 rounded-full transition-transform transform hover:scale-105">
-                <Link href="/signup">Join Now</Link>
-              </Button>
-            </div>
           </div>
         </div>
       </section>
