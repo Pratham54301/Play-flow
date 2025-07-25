@@ -95,7 +95,6 @@ export default function DashboardPage() {
     }
   };
 
-
   return (
     <div className="w-full">
       <section className="relative w-full h-64 md:h-80">
