@@ -7,7 +7,7 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'PayFlow - eSports Platform',
+  title: 'PlayFlow - eSports Platform',
   description: 'The ultimate platform for eSports payments and tournaments.',
 };
 

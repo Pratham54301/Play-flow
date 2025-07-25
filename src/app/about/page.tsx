@@ -6,10 +6,10 @@ export default function AboutPage() {
       <section className="container mx-auto px-4">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold tracking-tighter sm:text-5xl">
-            What is PayFlow?
+            What is PlayFlow?
           </h1>
           <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-            PayFlow is the revolutionary hub for competitive gamers. We provide a seamless and secure platform for tournament payouts, team funding, and content creator support, empowering the entire eSports ecosystem.
+            PlayFlow is the revolutionary hub for competitive gamers. We provide a seamless and secure platform for tournament payouts, team funding, and content creator support, empowering the entire eSports ecosystem.
           </p>
         </div>
 
