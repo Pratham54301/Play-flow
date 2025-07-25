@@ -28,6 +28,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -42,6 +43,7 @@ const formSchema = z.object({
 
 export default function DashboardPage() {
   const { toast } = useToast();
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -57,11 +59,16 @@ export default function DashboardPage() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    toast({
-      title: "Form Submitted",
-      description: "Your reward request has been received.",
-    });
-    form.reset();
+
+    if (values.paymentMode === "Online") {
+      router.push('/pay-now');
+    } else {
+      toast({
+        title: "Form Submitted",
+        description: "Your reward request has been received.",
+      });
+      form.reset();
+    }
   }
 
   return (
@@ -111,7 +118,7 @@ export default function DashboardPage() {
                   name="inGameName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>In-Game Name</FormLabel>
+                      <FormLabel>In-game Name</FormLabel>
                       <FormControl>
                         <Input placeholder="Enter your in-game name" {...field} />
                       </FormControl>
@@ -124,7 +131,7 @@ export default function DashboardPage() {
                   name="fullName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Your Full Name</FormLabel>
+                      <FormLabel>Full Name</FormLabel>
                       <FormControl>
                         <Input placeholder="Enter your full name" {...field} />
                       </FormControl>
@@ -137,7 +144,7 @@ export default function DashboardPage() {
                   name="upiId"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Your UPI ID</FormLabel>
+                      <FormLabel>Member UPI ID</FormLabel>
                       <FormControl>
                         <Input placeholder="Enter your UPI ID for rewards" {...field} />
                       </FormControl>
@@ -176,7 +183,7 @@ export default function DashboardPage() {
                     name="cashCollectorName"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Select Cash Collector Name</FormLabel>
+                        <FormLabel>Select Name</FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
@@ -184,7 +191,7 @@ export default function DashboardPage() {
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue placeholder="Select a name" />
-                            </SelectTrigger>
+                            </Trigger>
                           </FormControl>
                           <SelectContent>
                             <SelectItem value="Pratham">Pratham</SelectItem>
@@ -201,7 +208,7 @@ export default function DashboardPage() {
 
                 {paymentMode === "Online" && (
                    <div className="p-4 text-center text-muted-foreground border border-dashed rounded-md">
-                    Payment Gateway Here
+                    Payment Gateway will appear here.
                   </div>
                 )}
                 
