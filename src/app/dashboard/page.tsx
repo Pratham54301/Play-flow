@@ -78,7 +78,7 @@ export default function DashboardPage() {
           src="https://placehold.co/1920x400.png"
           alt="Dashboard Banner"
           fill
-          objectFit="cover"
+          style={{objectFit:"cover"}}
           className="z-0"
           data-ai-hint="esports gaming banner"
         />
