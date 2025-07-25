@@ -2,6 +2,7 @@
 
 import { Wallet } from "lucide-react";
 import Link from "next/link";
+import { Button } from "./ui/button";
 
 export default function NavigationBar() {
   return (
@@ -14,6 +15,14 @@ export default function NavigationBar() {
           <Wallet className="h-6 w-6" />
           <span>PayFlow</span>
         </Link>
+        <nav className="flex items-center gap-2">
+          <Button variant="ghost" asChild>
+            <Link href="/">Home</Link>
+          </Button>
+          <Button variant="ghost" asChild>
+            <Link href="/about">About</Link>
+          </Button>
+        </nav>
       </div>
     </header>
   );
