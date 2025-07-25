@@ -56,6 +56,14 @@ const generateFormSchema = (type: "Solo" | "Duo" | "Squad") => {
     upiId: z.string().min(1, { message: "UPI ID is required." }),
     paymentMode: z.enum(["Cash", "Online"]),
     cashCollectorName: z.string().optional(),
+  }).refine(data => {
+    if (data.paymentMode === 'Cash' && !data.cashCollectorName) {
+      return false;
+    }
+    return true;
+  }, {
+    message: "Please select a cash collector.",
+    path: ["cashCollectorName"],
   });
 };
 
@@ -73,7 +81,6 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
       fullName: "",
       upiId: "",
       paymentMode: "Online",
-      cashCollectorName: "",
     },
   });
 
@@ -105,122 +112,127 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col h-full">
             <div className="space-y-6 flex-grow">
-              {Array.from({ length: playerCount }).map((_, index) => (
-                <div key={index} className="space-y-4 p-4 border rounded-md">
-                   <h4 className="font-semibold text-foreground">Player {index + 1}</h4>
-                   <FormField
-                    control={form.control}
-                    name={`players.${index}.uid`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Game UID</FormLabel>
-                        <FormControl>
-                          <Input placeholder={`Player ${index + 1} UID`} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name={`players.${index}.name`}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>In-game Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder={`Player ${index + 1} Name`} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              ))}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {Array.from({ length: playerCount }).map((_, index) => (
+                  <div key={index} className="space-y-4 p-4 border rounded-md">
+                    <h4 className="font-semibold text-foreground">Player {index + 1}</h4>
+                    <FormField
+                      control={form.control}
+                      name={`players.${index}.uid`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Game UID</FormLabel>
+                          <FormControl>
+                            <Input placeholder={`Player ${index + 1} UID`} {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`players.${index}.name`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>In-game Name</FormLabel>
+                          <FormControl>
+                            <Input placeholder={`Player ${index + 1} Name`} {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                ))}
+              </div>
 
-              <FormField
-                control={form.control}
-                name="fullName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Your Full Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter your full name" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="upiId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Your UPI ID</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter your UPI ID for rewards" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="paymentMode"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Select Payment Mode</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a payment mode" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="Online">Online</SelectItem>
-                        <SelectItem value="Cash">Cash</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {paymentMode === "Cash" && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
                 <FormField
                   control={form.control}
-                  name="cashCollectorName"
+                  name="fullName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Select Cash Collector</FormLabel>
+                      <FormLabel>Your Full Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter your full name" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="upiId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Your UPI ID</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter your UPI ID for rewards" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="paymentMode"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Select Payment Mode</FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select a name" />
+                            <SelectValue placeholder="Select a payment mode" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="Pratham">Pratham</SelectItem>
-                          <SelectItem value="Jayraj Sinh">Jayraj Sinh</SelectItem>
-                          <SelectItem value="Devsinh">Devsinh</SelectItem>
-                          <SelectItem value="Umesh">Umesh</SelectItem>
+                          <SelectItem value="Online">Online</SelectItem>
+                          <SelectItem value="Cash">Cash</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-              )}
+
+                {paymentMode === "Cash" && (
+                  <FormField
+                    control={form.control}
+                    name="cashCollectorName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Select Cash Collector</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select a name" />
+                            </Trigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="Pratham">Pratham</SelectItem>
+                            <SelectItem value="Jayraj Sinh">Jayraj Sinh</SelectItem>
+                            <SelectItem value="Devsinh">Devsinh</SelectItem>
+                            <SelectItem value="Umesh">Umesh</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+              </div>
+
 
               {paymentMode === "Online" && (
-                <div className="p-4 text-center text-muted-foreground border border-dashed rounded-md">
-                  Proceed to pay online.
+                <div className="p-4 mt-4 text-center text-muted-foreground border border-dashed rounded-md">
+                  After submitting, you will be redirected to the payment gateway.
                 </div>
               )}
             </div>
             
-            <div className="mt-6">
+            <div className="mt-8">
                 <Button type="submit" className="w-full font-bold">
                     Submit
                 </Button>
