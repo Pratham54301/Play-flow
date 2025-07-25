@@ -23,6 +23,7 @@ import { useToast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -41,6 +42,18 @@ export default function LoginPage() {
       password: "",
     },
   });
+
+  useEffect(() => {
+    const isJoined = localStorage.getItem("isJoined");
+    if (!isJoined) {
+      toast({
+        title: "Not Registered",
+        description: "Please join first before logging in.",
+        variant: "destructive",
+      });
+      router.push("/signup");
+    }
+  }, [router, toast]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);

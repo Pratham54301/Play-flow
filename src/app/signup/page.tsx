@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -22,6 +23,7 @@ import { useToast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -50,8 +52,20 @@ export default function SignupPage() {
     },
   });
 
+  useEffect(() => {
+    const isJoined = localStorage.getItem("isJoined");
+    if (isJoined) {
+      toast({
+        title: "Already Registered",
+        description: "You have already joined. Please log in to continue.",
+      });
+      router.push("/login");
+    }
+  }, [router, toast]);
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    localStorage.setItem("isJoined", "true");
     toast({
       title: "Account Created!",
       description: "You have successfully signed up. Please log in.",
