@@ -23,7 +23,7 @@ export default function ContactPage() {
             <div className="space-y-4">
               <div className="flex items-center gap-4">
                 <Mail className="h-6 w-6 text-primary" />
-                <span className="text-lg">support@playflow.gg</span>
+                <span className="text-lg">support@payflow.gg</span>
               </div>
               <div className="flex items-center gap-4">
                 <Phone className="h-6 w-6 text-primary" />

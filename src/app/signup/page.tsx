@@ -19,7 +19,7 @@ export default function SignupPage() {
       <Card className="w-full max-w-sm bg-secondary/50 border-border">
         <CardHeader className="text-center space-y-2">
           <CardTitle className="text-3xl font-extrabold">Create an Account</CardTitle>
-          <CardDescription>Join the PlayFlow community and start competing</CardDescription>
+          <CardDescription>Join the PayFlow community and start competing</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">

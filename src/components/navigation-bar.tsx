@@ -14,7 +14,7 @@ export default function NavigationBar() {
         >
           <Gamepad2 className="h-6 w-6" />
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-400">
-            PlayFlow
+            PayFlow
           </span>
         </Link>
         <nav className="hidden md:flex items-center gap-2">

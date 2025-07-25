@@ -8,7 +8,7 @@ import Footer from '@/components/footer';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'PlayFlow - eSports Platform',
+  title: 'PayFlow - eSports Platform',
   description: 'The ultimate platform for eSports payments and tournaments.',
 };
 
