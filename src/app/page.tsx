@@ -89,6 +89,7 @@ export default function Home() {
           alt="Hero Background"
           fill
           className="object-cover"
+          priority
         />
         <div className="absolute inset-0 bg-black/60 z-10"></div>
         <div className="container relative z-20 px-4 py-16">
@@ -256,3 +257,5 @@ export default function Home() {
     </>
   );
 }
+
+    
