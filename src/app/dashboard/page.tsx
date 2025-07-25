@@ -72,16 +72,25 @@ export default function DashboardPage() {
   }
 
   const handleVerifyEmail = () => {
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    const currentUserEmail = localStorage.getItem("currentUserEmail");
-    if (currentUserEmail) {
-      const updatedUsers = users.map((user: any) =>
-        user.email === currentUserEmail ? { ...user, emailVerified: true } : user
-      );
-      localStorage.setItem("users", JSON.stringify(updatedUsers));
+    try {
+      const users = JSON.parse(localStorage.getItem("users") || "[]");
+      const currentUserEmail = localStorage.getItem("currentUserEmail");
+      if (currentUserEmail) {
+        const updatedUsers = users.map((user: any) =>
+          user.email === currentUserEmail ? { ...user, emailVerified: true } : user
+        );
+        localStorage.setItem("users", JSON.stringify(updatedUsers));
+        toast({
+          title: "Email Verified!",
+          description: "Your email has been successfully verified. You can now log in normally.",
+        });
+      }
+    } catch (error) {
+      console.error("Failed to verify email:", error);
       toast({
-        title: "Email Verified!",
-        description: "Your email has been successfully verified. You can now log in normally.",
+        title: "Verification Failed",
+        description: "Could not verify your email. Please try again.",
+        variant: "destructive",
       });
     }
   };
