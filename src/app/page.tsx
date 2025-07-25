@@ -3,52 +3,36 @@
 
 import { Button } from "@/components/ui/button";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
-import { zodResolver } from "@hookform/resolvers/zod";
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { ArrowRight, Gamepad2, Mail, MapPin, Phone, ShieldCheck, Trophy } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 
-const contactFormSchema = z.object({
-  name: z.string().min(1, { message: "Name is required." }),
-  email: z.string().email({ message: "Invalid email address." }),
-  subject: z.string().min(1, { message: "Subject is required." }),
-  message: z.string().min(10, { message: "Message must be at least 10 characters." }),
-});
+function RegistrationInfoCard({ title, formLink }: { title: string, formLink: string }) {
+  return (
+    <Card className="bg-secondary/50 border-border text-center hover:shadow-lg hover:shadow-primary/20 transition-shadow duration-300">
+      <CardHeader>
+        <CardTitle className="text-2xl font-bold">{title}</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="text-muted-foreground space-y-2">
+          <p className="font-semibold">Date: 04/10/2025</p>
+          <p className="font-semibold">Timing: 7:00 PM</p>
+        </div>
+        <Button asChild className="w-full font-bold transition-transform transform hover:scale-105">
+          <Link href={formLink}>Registration</Link>
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
+
 
 export default function Home() {
-  const { toast } = useToast();
-  const form = useForm<z.infer<typeof contactFormSchema>>({
-    resolver: zodResolver(contactFormSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    },
-  });
-
-  function onContactSubmit(values: z.infer<typeof contactFormSchema>) {
-    console.log(values);
-    toast({
-      title: "Message Sent!",
-      description: "Thanks for reaching out. We'll get back to you soon.",
-    });
-    form.reset();
-  }
-
   return (
     <>
       <section id="home" className="relative h-screen flex items-center justify-center text-center">
@@ -56,7 +40,7 @@ export default function Home() {
           src="https://placehold.co/1920x1080.png"
           alt="Background"
           fill
-          objectFit="cover"
+          style={{ objectFit: "cover" }}
           className="z-0"
           data-ai-hint="Free Fire gameplay"
         />
@@ -67,7 +51,7 @@ export default function Home() {
               Welcome to PlayFlow
             </h1>
             <p className="mt-4 max-w-xl mx-auto text-lg text-gray-300 md:text-xl">
-              Power your gaming journey with secure payments
+              The ultimate platform for eSports payments and tournaments. Join today and start your journey to the top.
             </p>
             <div className="mt-8 flex justify-center">
               <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-lg px-8 py-6 rounded-full transition-transform transform hover:scale-105">
@@ -75,6 +59,24 @@ export default function Home() {
               </Button>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section id="tournaments" className="py-12 md:py-24 bg-background">
+         <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-extrabold tracking-tighter sm:text-5xl">
+                Register for a Tournament
+              </h2>
+              <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
+                Choose your format and sign up to compete against the best.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <RegistrationInfoCard title="Solo Registration Form" formLink="/register/solo" />
+              <RegistrationInfoCard title="Duo Registration Form" formLink="/register/duo" />
+              <RegistrationInfoCard title="Squad Registration Form" formLink="/register/squad" />
+            </div>
         </div>
       </section>
 
@@ -126,7 +128,7 @@ export default function Home() {
                 Level up your support.
               </h3>
               <p className="text-muted-foreground text-lg">
-                Got a question, feedback, or just want to say hi? Our team is ready to assist you. Fill out the form or use the contact details below. We're here to help you dominate the game.
+                Got a question, feedback, or just want to say hi? Our team is ready to assist you. Use the contact details below. We're here to help you dominate the game.
               </p>
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
@@ -147,65 +149,13 @@ export default function Home() {
               </Link>
             </div>
             <div className="bg-secondary/50 p-8 rounded-lg border border-border">
-              <Form {...form}>
-                <form onSubmit={form.handleSubmit(onContactSubmit)} className="space-y-6">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Your Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Your Name" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Your Email</FormLabel>
-                        <FormControl>
-                          <Input type="email" placeholder="your.email@example.com" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="subject"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Subject</FormLabel>
-                        <FormControl>
-                          <Input placeholder="What's this about?" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="message"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Message</FormLabel>
-                        <FormControl>
-                          <Textarea placeholder="Your message..." rows={6} {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button type="submit" className="w-full font-bold bg-[#ff8c00] hover:bg-[#ff8c00]/90 text-black">
-                    Submit Message
-                  </Button>
-                </form>
-              </Form>
+                <div className="space-y-4 text-center">
+                    <h3 className="text-2xl font-bold">Have a question?</h3>
+                    <p className="text-muted-foreground">We are here to help!</p>
+                    <Button asChild size="lg">
+                        <Link href="mailto:bhatidevsinh@gmail.com">Email Us</Link>
+                    </Button>
+                </div>
             </div>
           </div>
         </div>

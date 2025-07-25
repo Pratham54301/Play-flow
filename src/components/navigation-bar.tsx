@@ -30,26 +30,47 @@ export default function NavigationBar() {
   const router = useRouter();
 
   useEffect(() => {
-    const userEmail = localStorage.getItem("currentUserEmail");
-    if (userEmail) {
-      const users = JSON.parse(localStorage.getItem("users") || "[]");
-      const currentUser = users.find((u: any) => u.email === userEmail);
-      if (currentUser) {
-        setUser({
-          ...currentUser,
-          // Mock data for game stats
-          gameName: "ProGamer123",
-          matchesPlayed: 125,
-          matchesWon: 90,
-          matchesLost: 35,
-        });
+    // This effect will run on the client side, so window and localStorage are available.
+    const checkUser = () => {
+      const userEmail = localStorage.getItem("currentUserEmail");
+      if (userEmail) {
+        const users = JSON.parse(localStorage.getItem("users") || "[]");
+        const currentUser = users.find((u: any) => u.email === userEmail);
+        if (currentUser) {
+          setUser({
+            ...currentUser,
+            // Mock data for game stats
+            gameName: "ProGamer123",
+            matchesPlayed: 125,
+            matchesWon: 90,
+            matchesLost: 35,
+          });
+        }
+      } else {
+        setUser(null);
       }
-    }
+    };
+
+    checkUser();
+
+    // Listen for storage changes to update the navbar in real-time
+    // This is useful if login/logout happens in another tab
+    window.addEventListener('storage', checkUser);
+    
+    // We also need a custom event listener because `storage` event doesn't fire for the same tab.
+    window.addEventListener('authChange', checkUser);
+
+    return () => {
+        window.removeEventListener('storage', checkUser);
+        window.removeEventListener('authChange', checkUser);
+    };
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("currentUserEmail");
     setUser(null);
+     // Dispatch event to notify other components on the same page
+    window.dispatchEvent(new CustomEvent('authChange'));
     router.push("/");
   };
 
@@ -69,6 +90,9 @@ export default function NavigationBar() {
           <Button variant="ghost" asChild>
             <Link href="/#home">Home</Link>
           </Button>
+           <Button variant="ghost" asChild>
+            <Link href="/#tournaments">Tournament</Link>
+          </Button>
           <Button variant="ghost" asChild>
             <Link href="/#about">About</Link>
           </Button>
@@ -83,7 +107,7 @@ export default function NavigationBar() {
                 <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                   <Avatar className="h-8 w-8">
                     <AvatarImage src="https://placehold.co/100x100.png" alt={user.fullname} data-ai-hint="gamer avatar" />
-                    <AvatarFallback>{user.fullname.charAt(0)}</AvatarFallback>
+                    <AvatarFallback>{user.fullname.charAt(0).toUpperCase()}</AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
@@ -114,7 +138,7 @@ export default function NavigationBar() {
                   <span>{user.matchesLost}</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout}>
+                <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
                   Log out
                 </DropdownMenuItem>
               </DropdownMenuContent>

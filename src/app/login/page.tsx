@@ -26,7 +26,6 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useEffect } from "react";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address." }),
@@ -67,22 +66,14 @@ export default function LoginPage() {
     }
 
     localStorage.setItem("currentUserEmail", user.email);
-
-    if (!user.emailVerified) {
-      toast({
-        title: "Email Verified",
-        description: "Please verify your email to continue. We've sent you to the dashboard to do so.",
-        variant: "destructive",
-      });
-      router.push("/dashboard");
-      return;
-    }
+    // Dispatch a custom event to notify the navbar of the auth change
+    window.dispatchEvent(new CustomEvent('authChange'));
     
     toast({
       title: "Logged In",
       description: "Welcome back! Redirecting...",
     });
-    router.push("/dashboard");
+    router.push("/");
   }
 
   return (

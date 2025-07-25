@@ -108,6 +108,7 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
           Fill out the form to register your {type === "Solo" ? "entry" : "team"}.
         </CardDescription>
       </CardHeader>
+  
       <CardContent className="flex-grow">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col h-full">
@@ -145,7 +146,7 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
                   </div>
                 ))}
               </div>
-
+  
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
                 <FormField
                   control={form.control}
@@ -160,7 +161,7 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
                     </FormItem>
                   )}
                 />
-
+  
                 <FormField
                   control={form.control}
                   name="upiId"
@@ -174,7 +175,7 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
                     </FormItem>
                   )}
                 />
-
+  
                 <FormField
                   control={form.control}
                   name="paymentMode"
@@ -196,7 +197,7 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
                     </FormItem>
                   )}
                 />
-
+  
                 {paymentMode === "Cash" && (
                   <FormField
                     control={form.control}
@@ -208,7 +209,7 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
                           <FormControl>
                             <SelectTrigger>
                               <SelectValue placeholder="Select a name" />
-                            </Trigger>
+                            </SelectTrigger>
                           </FormControl>
                           <SelectContent>
                             <SelectItem value="Pratham">Pratham</SelectItem>
@@ -223,19 +224,18 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
                   />
                 )}
               </div>
-
-
+  
               {paymentMode === "Online" && (
                 <div className="p-4 mt-4 text-center text-muted-foreground border border-dashed rounded-md">
                   After submitting, you will be redirected to the payment gateway.
                 </div>
               )}
             </div>
-            
+  
             <div className="mt-8">
-                <Button type="submit" className="w-full font-bold">
-                    Submit
-                </Button>
+              <Button type="submit" className="w-full font-bold">
+                Submit
+              </Button>
             </div>
           </form>
         </Form>
