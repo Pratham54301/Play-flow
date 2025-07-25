@@ -22,6 +22,9 @@ export default function NavigationBar() {
           <Button variant="ghost" asChild>
             <Link href="/about">About</Link>
           </Button>
+          <Button variant="ghost" asChild>
+            <Link href="/contact">Contact Us</Link>
+          </Button>
         </nav>
       </div>
     </header>
