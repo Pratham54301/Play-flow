@@ -86,9 +86,10 @@ export default function Home() {
       <section id="home" className="relative h-screen flex items-center justify-center text-center">
         <Image
           src="/hero.jpg"
-          alt="Hero background"
+          alt="Hero Background"
           fill
           className="object-cover"
+          data-ai-hint="game"
         />
         <div className="absolute inset-0 bg-black/60 z-10"></div>
         <div className="container relative z-20 px-4 py-16">
