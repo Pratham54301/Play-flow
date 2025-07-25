@@ -56,6 +56,7 @@ const generateFormSchema = (type: "Solo" | "Duo" | "Squad") => {
     upiId: z.string().min(1, { message: "UPI ID is required." }),
     paymentMode: z.enum(["Cash", "Online"]),
     cashCollectorName: z.string().optional(),
+    screenshot: z.any().optional(),
   }).refine(data => {
     if (data.paymentMode === 'Cash' && !data.cashCollectorName) {
       return false;
@@ -64,6 +65,14 @@ const generateFormSchema = (type: "Solo" | "Duo" | "Squad") => {
   }, {
     message: "Please select a cash collector.",
     path: ["cashCollectorName"],
+  }).refine(data => {
+    if (data.paymentMode === 'Online' && !data.screenshot) {
+        return false;
+    }
+    return true;
+  }, {
+    message: "Please upload a payment screenshot.",
+    path: ["screenshot"],
   });
 };
 
@@ -89,15 +98,11 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
 
-    if (values.paymentMode === "Online") {
-      router.push("/pay-now");
-    } else {
-      toast({
+    toast({
         title: "Form Submitted",
         description: `Your ${type} registration has been received.`,
-      });
-      form.reset();
-    }
+    });
+    form.reset();
   }
 
   return (
@@ -226,8 +231,24 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
               </div>
   
               {paymentMode === "Online" && (
-                <div className="p-4 mt-4 text-center text-muted-foreground border border-dashed rounded-md">
-                  After submitting, you will be redirected to the payment gateway.
+                <div className="pt-6">
+                    <FormField
+                        control={form.control}
+                        name="screenshot"
+                        render={({ field }) => (
+                            <FormItem>
+                            <FormLabel>Add Screenshot</FormLabel>
+                            <FormControl>
+                                <Input 
+                                    type="file" 
+                                    accept="image/*"
+                                    onChange={(e) => field.onChange(e.target.files ? e.target.files[0] : null)}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                 </div>
               )}
             </div>
