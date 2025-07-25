@@ -79,17 +79,16 @@ export default function Home() {
     Solo: soloLeaderboardData,
     Duo: duoLeaderboardData,
     Squad: squadLeaderboardData,
-  }[leaderboardMode];
+  }[leaderboardMode] || [];
 
   return (
     <>
       <section id="home" className="relative h-screen flex items-center justify-center text-center">
         <Image
           src="/hero.jpg"
-          alt="Background"
+          alt="Hero background"
           fill
-          style={{ objectFit: "cover" }}
-          className="z-0"
+          className="object-cover"
         />
         <div className="absolute inset-0 bg-black/60 z-10"></div>
         <div className="container relative z-20 px-4 py-16">
@@ -170,7 +169,7 @@ export default function Home() {
             </p>
           </div>
           <div className="max-w-md mx-auto mb-8">
-            <Select onValueChange={setLeaderboardMode} defaultValue={leaderboardMode}>
+            <Select onValueChange={(value) => setLeaderboardMode(value)} defaultValue={leaderboardMode}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select a mode" />
               </SelectTrigger>
