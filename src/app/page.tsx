@@ -89,18 +89,18 @@ export default function Home() {
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
                   <Mail className="h-6 w-6 text-primary" />
-                  <span className="text-lg">support@payflow.gg</span>
+                  <span className="text-lg">bhatidevsinh@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-4">
                   <Phone className="h-6 w-6 text-primary" />
-                  <span className="text-lg">+1 (555) 123-4567</span>
+                  <span className="text-lg">+91 9998467204</span>
                 </div>
                 <div className="flex items-center gap-4">
                   <MapPin className="h-6 w-6 text-primary" />
-                  <span className="text-lg">123 Gaming Lane, eSports City, 90210</span>
+                  <span className="text-lg">Ahmedabad, Gujarat</span>
                 </div>
               </div>
-              <Link href="#" className="inline-flex items-center gap-2 text-primary font-semibold hover:underline">
+              <Link href="https://www.google.com/maps/search/?api=1&query=Ahmedabad,Gujarat" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary font-semibold hover:underline">
                 Open Map <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
