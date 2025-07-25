@@ -1,19 +1,60 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight, Gamepad2, Mail, MapPin, Phone, ShieldCheck, Trophy } from "lucide-react";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+const contactFormSchema = z.object({
+  name: z.string().min(1, { message: "Name is required." }),
+  email: z.string().email({ message: "Invalid email address." }),
+  subject: z.string().min(1, { message: "Subject is required." }),
+  message: z.string().min(10, { message: "Message must be at least 10 characters." }),
+});
 
 export default function Home() {
+  const { toast } = useToast();
+  const form = useForm<z.infer<typeof contactFormSchema>>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    },
+  });
+
+  function onContactSubmit(values: z.infer<typeof contactFormSchema>) {
+    console.log(values);
+    toast({
+      title: "Message Sent!",
+      description: "Thanks for reaching out. We'll get back to you soon.",
+    });
+    form.reset();
+  }
+
   return (
     <>
       <section id="home" className="relative h-screen flex items-center justify-center text-center">
         <Image
           src="https://placehold.co/1920x1080.png"
           alt="Background"
-          layout="fill"
+          fill
           objectFit="cover"
           className="z-0"
           data-ai-hint="Free Fire gameplay"
@@ -105,27 +146,65 @@ export default function Home() {
               </Link>
             </div>
             <div className="bg-secondary/50 p-8 rounded-lg border border-border">
-              <form className="space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Your Name</Label>
-                  <Input id="name" placeholder="Your Name" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Your Email</Label>
-                  <Input id="email" type="email" placeholder="your.email@example.com" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="subject">Subject</Label>
-                  <Input id="subject" placeholder="What's this about?" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="message">Message</Label>
-                  <Textarea id="message" placeholder="Your message..." rows={6} />
-                </div>
-                <Button type="submit" className="w-full font-bold bg-[#ff8c00] hover:bg-[#ff8c00]/90 text-black">
-                  Submit Message
-                </Button>
-              </form>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onContactSubmit)} className="space-y-6">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Your Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Your Name" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Your Email</FormLabel>
+                        <FormControl>
+                          <Input type="email" placeholder="your.email@example.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="subject"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Subject</FormLabel>
+                        <FormControl>
+                          <Input placeholder="What's this about?" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="message"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Message</FormLabel>
+                        <FormControl>
+                          <Textarea placeholder="Your message..." rows={6} {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="submit" className="w-full font-bold bg-[#ff8c00] hover:bg-[#ff8c00]/90 text-black">
+                    Submit Message
+                  </Button>
+                </form>
+              </Form>
             </div>
           </div>
         </div>
