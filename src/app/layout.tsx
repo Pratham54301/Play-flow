@@ -1,6 +1,7 @@
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
+import NavigationBar from '@/components/navigation-bar';
 
 export const metadata: Metadata = {
   title: 'PayFlow',
@@ -20,6 +21,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"></link>
       </head>
       <body className="font-body antialiased">
+        <NavigationBar />
         {children}
         <Toaster />
       </body>
