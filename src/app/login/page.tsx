@@ -23,7 +23,6 @@ import { useToast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -43,8 +42,12 @@ export default function LoginPage() {
     },
   });
 
-  useEffect(() => {
+  function onSubmit(values: z.infer<typeof formSchema>) {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const user = users.find(
+      (u: any) => u.email === values.email && u.password === values.password
+    );
+
     if (users.length === 0) {
       toast({
         title: "Not Registered",
@@ -52,15 +55,9 @@ export default function LoginPage() {
         variant: "destructive",
       });
       router.push("/signup");
+      return;
     }
-  }, [router, toast]);
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    const user = users.find(
-      (u: any) => u.email === values.email && u.password === values.password
-    );
-
+    
     if (!user) {
       toast({
         title: "Invalid Credentials",
@@ -70,18 +67,18 @@ export default function LoginPage() {
       return;
     }
 
+    localStorage.setItem("currentUserEmail", user.email);
+
     if (!user.emailVerified) {
       toast({
         title: "Email Not Verified",
         description: "Please verify your email to continue. We've sent you to the dashboard to do so.",
         variant: "destructive",
       });
-      localStorage.setItem("currentUserEmail", user.email);
-      router.push("/dashboard"); // Redirect to allow verification
+      router.push("/dashboard"); 
       return;
     }
     
-    localStorage.setItem("currentUserEmail", user.email);
     toast({
       title: "Logged In",
       description: "Welcome back! Redirecting...",

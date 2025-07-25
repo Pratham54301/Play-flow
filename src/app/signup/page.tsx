@@ -23,7 +23,6 @@ import { useToast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -52,19 +51,6 @@ export default function SignupPage() {
     },
   });
 
-  useEffect(() => {
-    // This effect can be removed if we are checking per-user,
-    // but can be useful to prevent logged-in users from signing up again.
-    const currentUserEmail = localStorage.getItem("currentUserEmail");
-    if (currentUserEmail) {
-      toast({
-        title: "Already Logged In",
-        description: "You are already logged in.",
-      });
-      router.push("/dashboard");
-    }
-  }, [router, toast]);
-
   function onSubmit(values: z.infer<typeof formSchema>) {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
     const existingUser = users.find((user: any) => user.email === values.email);
@@ -91,7 +77,7 @@ export default function SignupPage() {
 
     toast({
       title: "Account Created!",
-      description: "You have successfully signed up. Please log in.",
+      description: "You have successfully signed up. Please verify your email then log in.",
     });
     router.push("/login");
   }
@@ -101,7 +87,7 @@ export default function SignupPage() {
       <Card className="w-full max-w-sm bg-secondary/50 border-border">
         <CardHeader className="text-center space-y-2">
           <CardTitle className="text-3xl font-extrabold">Create an Account</CardTitle>
-          <CardDescription>Join the PayFlow community and start competing</CardDescription>
+          <CardDescription>Join the PlayFlow community and start competing</CardDescription>
         </CardHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>

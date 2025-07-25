@@ -1,3 +1,4 @@
+
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
@@ -8,7 +9,7 @@ import Footer from '@/components/footer';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'PayFlow - eSports Platform',
+  title: 'PlayFlow - eSports Platform',
   description: 'The ultimate platform for eSports payments and tournaments.',
 };
 

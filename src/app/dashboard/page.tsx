@@ -110,14 +110,14 @@ export default function DashboardPage() {
           <CardHeader>
             <CardTitle className="text-2xl font-bold">Reward Collection Form</CardTitle>
             <CardDescription>
-              Fill out the form below to receive your reward. Or verify your email if you haven't.
+              Fill out the form below to receive your reward. Or verify your email if you haven&apos;t.
             </CardDescription>
           </CardHeader>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <CardContent className="space-y-6">
                 <Button onClick={handleVerifyEmail} type="button" variant="outline" className="w-full">
-                  Verify Email (Dev Only)
+                  Verify Email (For Demo Purposes)
                 </Button>
                 <FormField
                   control={form.control}

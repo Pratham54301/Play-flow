@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -63,7 +64,7 @@ export default function Home() {
         <div className="container relative z-20 px-4 py-16">
           <div className="mx-auto max-w-3xl">
             <h1 className="text-5xl font-extrabold tracking-tighter sm:text-6xl md:text-7xl text-white">
-              Welcome to PayFlow
+              Welcome to PlayFlow
             </h1>
             <p className="mt-4 max-w-xl mx-auto text-lg text-gray-300 md:text-xl">
               Power your gaming journey with secure payments
@@ -81,10 +82,10 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="text-center">
             <h2 className="text-4xl font-extrabold tracking-tighter sm:text-5xl">
-              What is PayFlow?
+              What is PlayFlow?
             </h2>
             <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-              PayFlow is the revolutionary hub for competitive gamers. We provide a seamless and secure platform for tournament payouts, team funding, and content creator support, empowering the entire eSports ecosystem.
+              PlayFlow is the revolutionary hub for competitive gamers. We provide a seamless and secure platform for tournament payouts, team funding, and content creator support, empowering the entire eSports ecosystem.
             </p>
           </div>
 

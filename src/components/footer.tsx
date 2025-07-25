@@ -1,3 +1,4 @@
+
 import { Gamepad2, Instagram, Twitter } from "lucide-react";
 import Link from "next/link";
 
@@ -28,7 +29,7 @@ export default function Footer() {
             <Link href="/" className="flex items-center gap-2 font-bold text-xl text-primary mb-4">
               <Gamepad2 className="h-6 w-6" />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-400">
-                PayFlow
+                PlayFlow
               </span>
             </Link>
           </div>
@@ -59,7 +60,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t border-gray-800 mt-8 pt-6 text-center text-sm">
-          <p>Copyright © PayFlow 2025</p>
+          <p>Copyright © PlayFlow 2025</p>
         </div>
       </div>
     </footer>
