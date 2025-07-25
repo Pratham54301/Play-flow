@@ -19,13 +19,13 @@ export default function NavigationBar() {
         </Link>
         <nav className="hidden md:flex items-center gap-2">
           <Button variant="ghost" asChild>
-            <Link href="/">Home</Link>
+            <Link href="/#home">Home</Link>
           </Button>
           <Button variant="ghost" asChild>
-            <Link href="/about">About</Link>
+            <Link href="/#about">About</Link>
           </Button>
           <Button variant="ghost" asChild>
-            <Link href="/contact">Contact</Link>
+            <Link href="/#contact">Contact</Link>
           </Button>
         </nav>
         <div className="flex items-center gap-2">
