@@ -44,8 +44,8 @@ export default function LoginPage() {
   });
 
   useEffect(() => {
-    const isJoined = localStorage.getItem("isJoined");
-    if (!isJoined) {
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    if (users.length === 0) {
       toast({
         title: "Not Registered",
         description: "Please join first before logging in.",
@@ -56,7 +56,32 @@ export default function LoginPage() {
   }, [router, toast]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const user = users.find(
+      (u: any) => u.email === values.email && u.password === values.password
+    );
+
+    if (!user) {
+      toast({
+        title: "Invalid Credentials",
+        description: "Please check your email and password.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!user.emailVerified) {
+      toast({
+        title: "Email Not Verified",
+        description: "Please verify your email to continue. We've sent you to the dashboard to do so.",
+        variant: "destructive",
+      });
+      localStorage.setItem("currentUserEmail", user.email);
+      router.push("/dashboard"); // Redirect to allow verification
+      return;
+    }
+    
+    localStorage.setItem("currentUserEmail", user.email);
     toast({
       title: "Logged In",
       description: "Welcome back! Redirecting...",

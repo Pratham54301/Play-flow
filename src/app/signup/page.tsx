@@ -53,19 +53,42 @@ export default function SignupPage() {
   });
 
   useEffect(() => {
-    const isJoined = localStorage.getItem("isJoined");
-    if (isJoined) {
+    // This effect can be removed if we are checking per-user,
+    // but can be useful to prevent logged-in users from signing up again.
+    const currentUserEmail = localStorage.getItem("currentUserEmail");
+    if (currentUserEmail) {
       toast({
-        title: "Already Registered",
-        description: "You have already joined. Please log in to continue.",
+        title: "Already Logged In",
+        description: "You are already logged in.",
       });
-      router.push("/login");
+      router.push("/dashboard");
     }
   }, [router, toast]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    localStorage.setItem("isJoined", "true");
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const existingUser = users.find((user: any) => user.email === values.email);
+
+    if (existingUser) {
+      toast({
+        title: "Already Registered",
+        description: "This email is already registered. Please log in.",
+        variant: "destructive",
+      });
+      router.push("/login");
+      return;
+    }
+
+    const newUser = {
+      fullname: values.fullname,
+      email: values.email,
+      password: values.password, // In a real app, hash this!
+      emailVerified: false,
+    };
+
+    users.push(newUser);
+    localStorage.setItem("users", JSON.stringify(users));
+
     toast({
       title: "Account Created!",
       description: "You have successfully signed up. Please log in.",

@@ -71,6 +71,22 @@ export default function DashboardPage() {
     }
   }
 
+  const handleVerifyEmail = () => {
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const currentUserEmail = localStorage.getItem("currentUserEmail");
+    if (currentUserEmail) {
+      const updatedUsers = users.map((user: any) =>
+        user.email === currentUserEmail ? { ...user, emailVerified: true } : user
+      );
+      localStorage.setItem("users", JSON.stringify(updatedUsers));
+      toast({
+        title: "Email Verified!",
+        description: "Your email has been successfully verified. You can now log in normally.",
+      });
+    }
+  };
+
+
   return (
     <div className="w-full">
       <section className="relative w-full h-64 md:h-80">
@@ -94,12 +110,15 @@ export default function DashboardPage() {
           <CardHeader>
             <CardTitle className="text-2xl font-bold">Reward Collection Form</CardTitle>
             <CardDescription>
-              Fill out the form below to receive your reward.
+              Fill out the form below to receive your reward. Or verify your email if you haven't.
             </CardDescription>
           </CardHeader>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <CardContent className="space-y-6">
+                <Button onClick={handleVerifyEmail} type="button" variant="outline" className="w-full">
+                  Verify Email (Dev Only)
+                </Button>
                 <FormField
                   control={form.control}
                   name="memberGameUid"
