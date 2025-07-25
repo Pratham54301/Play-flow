@@ -70,7 +70,7 @@ export default function LoginPage() {
 
     if (!user.emailVerified) {
       toast({
-        title: "Email Not Verified",
+        title: "Email Verified",
         description: "Please verify your email to continue. We've sent you to the dashboard to do so.",
         variant: "destructive",
       });
