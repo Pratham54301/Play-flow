@@ -24,7 +24,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ArrowRight, Gamepad2, Mail, MapPin, Phone, ShieldCheck, Trophy } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -83,25 +82,15 @@ export default function Home() {
 
   return (
     <>
-      <section id="home" className="relative h-screen">
-        <Image
-          src="/hero.jpg"
-          alt="Hero Background"
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-black/60 z-10"></div>
-        <div className="relative z-20 flex items-center justify-center h-full text-center">
-            <div className="container px-4 py-16">
-                <div className="mx-auto max-w-3xl">
-                    <h1 className="text-5xl font-extrabold tracking-tighter sm:text-6xl md:text-7xl text-white">
-                    Welcome to PlayFlow
-                    </h1>
-                    <p className="mt-4 max-w-xl mx-auto text-lg text-gray-300 md:text-xl">
-                    The ultimate platform for eSports payments and tournaments. Join today and start your journey to the top.
-                    </p>
-                </div>
+      <section id="home" className="relative bg-background flex items-center justify-center h-screen text-center">
+        <div className="container px-4 py-16">
+            <div className="mx-auto max-w-3xl">
+                <h1 className="text-5xl font-extrabold tracking-tighter sm:text-6xl md:text-7xl text-foreground">
+                Welcome to PlayFlow
+                </h1>
+                <p className="mt-4 max-w-xl mx-auto text-lg text-muted-foreground md:text-xl">
+                The ultimate platform for eSports payments and tournaments. Join today and start your journey to the top.
+                </p>
             </div>
         </div>
       </section>
@@ -259,3 +248,5 @@ export default function Home() {
     </>
   );
 }
+
+    
