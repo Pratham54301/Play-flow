@@ -111,12 +111,12 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
     Duo: {
         amount: 60,
         upiId: 'jayrajsinhchauhan999-1@okicici',
-        qr: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=60&cu=INR'
+        qr: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=60&cu=INR`
     },
     Squad: {
         amount: 100,
         upiId: 'jayrajsinhchauhan999-1@okicici',
-        qr: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=100&cu=INR'
+        qr: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=100&cu=INR`
     },
   };
 
@@ -267,9 +267,6 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
                           🔗 Pay ₹{currentPayment.amount} via UPI (opens UPI app)
                         </Link>
                     </Button>
-                    <p className="text-sm text-muted-foreground">OR</p>
-                    <p className="text-foreground font-semibold">Scan QR for Payment</p>
-                    <Image src={currentPayment.qr} alt={`${type} QR Payment`} width={200} height={200} className="rounded-md border-2 border-primary" />
                   </div>
 
                   <FormField
