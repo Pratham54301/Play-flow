@@ -78,6 +78,11 @@ const generateFormSchema = (type: "Solo" | "Duo" | "Squad") => {
   });
 };
 
+type PaymentDetail = {
+    amount: number;
+    upiId: string;
+    qr: string;
+};
 
 export default function RegistrationCard({ type }: RegistrationCardProps) {
   const { toast } = useToast();
@@ -97,7 +102,7 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
 
   const paymentMode = form.watch("paymentMode");
   
-  const paymentDetails = {
+  const paymentDetails: Record<"Solo" | "Duo" | "Squad", PaymentDetail> = {
     Solo: {
         amount: 30,
         upiId: '7777967668@upi',
