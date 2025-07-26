@@ -30,6 +30,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import Image from 'next/image';
 
 interface RegistrationCardProps {
   type: "Solo" | "Duo" | "Squad";
@@ -94,6 +95,14 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
   });
 
   const paymentMode = form.watch("paymentMode");
+  
+  const qrCodeMap = {
+    Solo: '/solo-qr.png',
+    Duo: '/duo-qr.png',
+    Squad: '/squad-qr.png',
+  };
+
+  const currentQrCode = qrCodeMap[type];
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
@@ -231,24 +240,28 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
               </div>
   
               {paymentMode === "Online" && (
-                <div className="pt-6">
-                    <FormField
-                        control={form.control}
-                        name="screenshot"
-                        render={({ field }) => (
-                            <FormItem>
-                            <FormLabel>Add Screenshot</FormLabel>
-                            <FormControl>
-                                <Input 
-                                    type="file" 
-                                    accept="image/*"
-                                    onChange={(e) => field.onChange(e.target.files ? e.target.files[0] : null)}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+                <div className="pt-6 space-y-4">
+                  <div className="flex flex-col items-center justify-center space-y-2">
+                    <p className="text-foreground font-semibold">Scan QR for Payment</p>
+                    <Image src={currentQrCode} alt={`${type} QR Code`} width={200} height={200} className="rounded-md border-2 border-primary" />
+                  </div>
+                  <FormField
+                      control={form.control}
+                      name="screenshot"
+                      render={({ field }) => (
+                          <FormItem>
+                          <FormLabel>Add Screenshot</FormLabel>
+                          <FormControl>
+                              <Input 
+                                  type="file" 
+                                  accept="image/*"
+                                  onChange={(e) => field.onChange(e.target.files ? e.target.files[0] : null)}
+                              />
+                          </FormControl>
+                          <FormMessage />
+                          </FormItem>
+                      )}
+                  />
                 </div>
               )}
             </div>
