@@ -100,8 +100,6 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
   const paymentDetails = {
     Solo: {
         amount: 30,
-        git status
-
         upiId: '7777967668@upi',
         qr: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=7777967668@upi&pn=prathamkumar=30&cu=INR'
     },
