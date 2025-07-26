@@ -85,12 +85,11 @@ export default function Home() {
     <>
       <section id="home" className="relative h-screen w-full">
         <Image
-            src="https://placehold.co/1920x1080.png"
+            src="/hero.jpg"
             alt="Hero Background"
             fill
             className="object-cover"
             priority
-            data-ai-hint="gaming esports"
         />
         <div className="absolute inset-0 bg-background/60" />
         <div className="relative z-10 flex h-full items-center justify-center text-center">
