@@ -31,6 +31,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Image from 'next/image';
+import Link from "next/link";
 
 interface RegistrationCardProps {
   type: "Solo" | "Duo" | "Squad";
@@ -241,10 +242,22 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
   
               {paymentMode === "Online" && (
                 <div className="pt-6 space-y-4">
-                  <div className="flex flex-col items-center justify-center space-y-2">
-                    <p className="text-foreground font-semibold">Scan QR for Payment</p>
-                    <Image src={currentQrCode} alt={`${type} QR Code`} width={200} height={200} className="rounded-md border-2 border-primary" />
-                  </div>
+                  {type === 'Solo' ? (
+                     <div className="flex flex-col items-center justify-center space-y-4">
+                        <p className="text-foreground font-semibold">Click to Pay</p>
+                        <Button asChild>
+                            <Link href="upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=30&cu=INR">
+                                Pay ₹30 for Solo (Open in UPI App)
+                            </Link>
+                        </Button>
+                     </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center space-y-2">
+                        <p className="text-foreground font-semibold">Scan QR for Payment</p>
+                        <Image src={currentQrCode} alt={`${type} QR Code`} width={200} height={200} className="rounded-md border-2 border-primary" />
+                    </div>
+                  )}
+
                   <FormField
                       control={form.control}
                       name="screenshot"
