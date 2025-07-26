@@ -26,6 +26,7 @@ import {
 import { ArrowRight, Gamepad2, Mail, MapPin, Phone, ShieldCheck, Trophy } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import Image from "next/image";
 
 function RegistrationInfoCard({ title, formLink }: { title: string, formLink: string }) {
   return (
@@ -82,7 +83,15 @@ export default function Home() {
 
   return (
     <>
-      <section id="home" className="relative bg-background flex items-center justify-center h-screen text-center">
+      <section id="home" className="relative flex h-screen w-full items-center justify-center text-center">
+        <Image
+            src="https://placehold.co/1920x1080.png"
+            alt="Hero Background"
+            fill
+            className="object-cover -z-10"
+            data-ai-hint="gaming esports"
+        />
+        <div className="absolute inset-0 bg-background/60 -z-10" />
         <div className="container px-4 py-16">
             <div className="mx-auto max-w-3xl">
                 <h1 className="text-5xl font-extrabold tracking-tighter sm:text-6xl md:text-7xl text-foreground">
@@ -248,5 +257,3 @@ export default function Home() {
     </>
   );
 }
-
-    
