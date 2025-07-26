@@ -97,13 +97,27 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
 
   const paymentMode = form.watch("paymentMode");
   
-  const qrCodeMap = {
-    Solo: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=30&cu=INR',
-    Duo: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999@oksbi&pn=Jayraj&am=60&cu=INR',
-    Squad: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=100&cu=INR',
+  const paymentDetails = {
+    Solo: {
+        amount: 30,
+        upiId: 'jayrajsinhchauhan999-1@okicici',
+        qr: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=30&cu=INR'
+    },
+    Duo: {
+        amount: 60,
+        upiId: 'jayrajsinhchauhan999-1@okicici',
+        qr: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=60&cu=INR'
+    },
+    Squad: {
+        amount: 100,
+        upiId: 'jayrajsinhchauhan999-1@okicici',
+        qr: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=100&cu=INR'
+    },
   };
 
-  const currentQrCode = qrCodeMap[type];
+  const currentPayment = paymentDetails[type];
+  const upiLink = `upi://pay?pa=${currentPayment.upiId}&pn=Jayraj&am=${currentPayment.amount}&cu=INR`;
+
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
@@ -243,23 +257,14 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
               {paymentMode === "Online" && (
                 <div className="pt-6 space-y-4">
                   <div className="flex flex-col items-center justify-center space-y-4">
-                    {type === 'Solo' ? (
-                        <>
-                          <Button asChild>
-                              <Link href="upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=30&cu=INR">
-                                🔗 Pay ₹30 via UPI (opens UPI app)
-                              </Link>
-                          </Button>
-                          <p className="text-sm text-muted-foreground">OR</p>
-                          <p className="text-foreground font-semibold">Scan QR for Payment</p>
-                          <Image src={currentQrCode} alt="Solo QR Payment" width={200} height={200} className="rounded-md border-2 border-primary" />
-                        </>
-                    ) : (
-                      <>
-                          <p className="text-foreground font-semibold">Scan QR for Payment</p>
-                          <Image src={currentQrCode} alt={`${type} QR Code`} width={200} height={200} className="rounded-md border-2 border-primary" />
-                      </>
-                    )}
+                    <Button asChild>
+                        <Link href={upiLink}>
+                          🔗 Pay ₹{currentPayment.amount} via UPI (opens UPI app)
+                        </Link>
+                    </Button>
+                    <p className="text-sm text-muted-foreground">OR</p>
+                    <p className="text-foreground font-semibold">Scan QR for Payment</p>
+                    <Image src={currentPayment.qr} alt={`${type} QR Payment`} width={200} height={200} className="rounded-md border-2 border-primary" />
                   </div>
 
                   <FormField
