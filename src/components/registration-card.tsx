@@ -117,17 +117,17 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
     Solo: {
         amount: 30,
         upiId: '7777967668@upi',
-        upiLink: 'upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=30&cu=INR'
+        upiLink: 'upi://pay?pa=7777967668@upi&pn=Prathamkumar&am=30&cu=INR'
     },
     Duo: {
         amount: 60,
         upiId: '7777967668@upi',
-        upiLink: 'upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=60&cu=INR'
+upiLink: 'upi://pay?pa=7777967668@upi&pn=Prathamkumar&am=30&cu=INR'
     },
     Squad: {
         amount: 100,
         upiId: '7777967668@upi',
-        upiLink: 'upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=100&cu=INR'
+upiLink: 'upi://pay?pa=7777967668@upi&pn=Prathamkumar&am=30&cu=INR'
     },
   };
 
