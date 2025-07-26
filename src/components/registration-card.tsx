@@ -98,9 +98,9 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
   const paymentMode = form.watch("paymentMode");
   
   const qrCodeMap = {
-    Solo: '/solo-qr.jpg',
-    Duo: '/duo-qr.png',
-    Squad: '/squad-qr.png',
+    Solo: '', // Not used for Solo
+    Duo: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999@oksbi&pn=Jayraj&am=60&cu=INR',
+    Squad: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=100&cu=INR',
   };
 
   const currentQrCode = qrCodeMap[type];
