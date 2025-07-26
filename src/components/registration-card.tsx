@@ -97,7 +97,7 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
   const paymentMode = form.watch("paymentMode");
   
   const qrCodeMap = {
-    Solo: '/solo-qr.png',
+    Solo: '/solo-qr.jpg',
     Duo: '/duo-qr.png',
     Squad: '/squad-qr.png',
   };
