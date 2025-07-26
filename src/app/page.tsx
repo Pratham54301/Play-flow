@@ -27,6 +27,7 @@ import { ArrowRight, Gamepad2, Mail, MapPin, Phone, ShieldCheck, Trophy } from "
 import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
+import heroImage from "@/components/public/hero.jpg";
 
 function RegistrationInfoCard({ title, formLink }: { title: string, formLink: string }) {
   return (
