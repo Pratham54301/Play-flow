@@ -105,13 +105,13 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
     },
     Duo: {
         amount: 60,
-        upiId: '7777967668@upi',
-        qr: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=7777967668@upi&pn=prathamkumar=60&cu=INR'
+        upiId: 'jayrajsinhchauhan999-1@okicici',
+        qr: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=60&cu=INR'
     },
     Squad: {
         amount: 100,
-        upiId: '7777967668@upi',
-        qr: 'upi://pay?pa=7777967668@upi&pn=prathamkuamr&am=100&cu=INR'
+        upiId: 'jayrajsinhchauhan999-1@okicici',
+        qr: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=100&cu=INR'
     },
   };
 
