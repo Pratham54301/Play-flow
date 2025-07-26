@@ -57,6 +57,7 @@ const generateFormSchema = (type: "Solo" | "Duo" | "Squad") => {
     fullName: z.string().min(1, { message: "Full name is required." }),
     upiId: z.string().min(1, { message: "UPI ID is required." }),
     paymentMode: z.enum(["Cash", "Online"]),
+    utrNumber: z.string().optional(),
     cashCollectorName: z.string().optional(),
     screenshot: z.any().optional(),
   }).refine(data => {
@@ -75,6 +76,14 @@ const generateFormSchema = (type: "Solo" | "Duo" | "Squad") => {
   }, {
     message: "Please upload a payment screenshot.",
     path: ["screenshot"],
+  }).refine(data => {
+    if (data.paymentMode === 'Online' && !data.utrNumber) {
+        return false;
+    }
+    return true;
+  }, {
+    message: "UTR number is required for online payments.",
+    path: ["utrNumber"],
   });
 };
 
@@ -82,6 +91,7 @@ type PaymentDetail = {
     amount: number;
     upiId: string;
     qr: string;
+    upiLink: string;
 };
 
 export default function RegistrationCard({ type }: RegistrationCardProps) {
@@ -111,18 +121,18 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
     Duo: {
         amount: 60,
         upiId: 'jayrajsinhchauhan999-1@okicici',
-        qr: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=60&cu=INR`
+        qr: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=60&cu=INR`,
+        upiLink: 'upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=60&cu=INR'
     },
     Squad: {
         amount: 100,
         upiId: 'jayrajsinhchauhan999-1@okicici',
-        qr: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=100&cu=INR`
+        qr: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=100&cu=INR`,
+        upiLink: 'upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=100&cu=INR'
     },
   };
 
   const currentPayment = paymentDetails[type];
-  const upiLink = `upi://pay?pa=${currentPayment.upiId}&pn=Jayraj&am=${currentPayment.amount}&cu=INR`;
-
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
@@ -263,11 +273,25 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
                 <div className="pt-6 space-y-4">
                   <div className="flex flex-col items-center justify-center space-y-4">
                     <Button asChild>
-                        <Link href={upiLink}>
+                        <Link href={currentPayment.upiLink}>
                           🔗 Pay ₹{currentPayment.amount} via UPI (opens UPI app)
                         </Link>
                     </Button>
                   </div>
+
+                   <FormField
+                    control={form.control}
+                    name="utrNumber"
+                    render={({ field }) => (
+                        <FormItem>
+                        <FormLabel>UTR Number</FormLabel>
+                        <FormControl>
+                            <Input placeholder="Enter your UTR number" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                        </FormItem>
+                    )}
+                    />
 
                   <FormField
                       control={form.control}
