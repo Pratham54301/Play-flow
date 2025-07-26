@@ -83,23 +83,25 @@ export default function Home() {
 
   return (
     <>
-      <section id="home" className="relative flex h-screen w-full items-center justify-center text-center">
+      <section id="home" className="relative h-screen w-full">
         <Image
-            src="https://placehold.co/1920x1080.png"
+            src="/hero.jpg"
             alt="Hero Background"
             fill
-            className="object-cover -z-10"
-            data-ai-hint="gaming esports"
+            className="object-cover"
+            priority
         />
-        <div className="absolute inset-0 bg-background/60 -z-10" />
-        <div className="container px-4 py-16">
-            <div className="mx-auto max-w-3xl">
-                <h1 className="text-5xl font-extrabold tracking-tighter sm:text-6xl md:text-7xl text-foreground">
-                Welcome to PlayFlow
-                </h1>
-                <p className="mt-4 max-w-xl mx-auto text-lg text-muted-foreground md:text-xl">
-                The ultimate platform for eSports payments and tournaments. Join today and start your journey to the top.
-                </p>
+        <div className="absolute inset-0 bg-background/60" />
+        <div className="relative z-10 flex h-full items-center justify-center text-center">
+            <div className="container px-4 py-16">
+                <div className="mx-auto max-w-3xl">
+                    <h1 className="text-5xl font-extrabold tracking-tighter sm:text-6xl md:text-7xl text-foreground">
+                    Welcome to PlayFlow
+                    </h1>
+                    <p className="mt-4 max-w-xl mx-auto text-lg text-muted-foreground md:text-xl">
+                    The ultimate platform for eSports payments and tournaments. Join today and start your journey to the top.
+                    </p>
+                </div>
             </div>
         </div>
       </section>
