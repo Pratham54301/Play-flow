@@ -85,27 +85,31 @@ export default function Home() {
   return (
     <>
       <section id="home" className="relative h-screen w-full">
-        <Image
-            src="/hero.jpg"
-            alt="Hero Background"
-            fill
-            className="object-cover"
-            priority
-        />
-        <div className="absolute inset-0 bg-background/60" />
-        <div className="relative z-10 flex h-full items-center justify-center text-center">
-            <div className="container px-4 py-16">
-                <div className="mx-auto max-w-3xl">
-                    <h1 className="text-5xl font-extrabold tracking-tighter sm:text-6xl md:text-7xl text-foreground">
-                    Welcome to PlayFlow
-                    </h1>
-                    <p className="mt-4 max-w-xl mx-auto text-lg text-muted-foreground md:text-xl">
-                    The ultimate platform for eSports payments and tournaments. Join today and start your journey to the top.
-                    </p>
-                </div>
-            </div>
+      <Image
+        src={heroImage}
+        alt="Hero Background"
+        fill
+        className="object-cover"
+        priority
+      />
+      
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-background/60" />
+
+      {/* Hero Content */}
+      <div className="relative z-10 flex h-full items-center justify-center text-center">
+        <div className="container px-4 py-16">
+          <div className="mx-auto max-w-3xl">
+            <h1 className="text-5xl font-extrabold tracking-tighter sm:text-6xl md:text-7xl text-foreground">
+              Welcome to PlayFlow
+            </h1>
+            <p className="mt-4 max-w-xl mx-auto text-lg text-muted-foreground md:text-xl">
+              The ultimate platform for eSports payments and tournaments. Join today and start your journey to the top.
+            </p>
+          </div>
         </div>
-      </section>
+      </div>
+    </section>
 
       <section id="tournaments" className="py-12 md:py-24 bg-background">
          <div className="container mx-auto px-4">
