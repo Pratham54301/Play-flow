@@ -98,7 +98,7 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
   const paymentMode = form.watch("paymentMode");
   
   const qrCodeMap = {
-    Solo: '', // Not used for Solo
+    Solo: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=30&cu=INR',
     Duo: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999@oksbi&pn=Jayraj&am=60&cu=INR',
     Squad: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=100&cu=INR',
   };
@@ -242,21 +242,25 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
   
               {paymentMode === "Online" && (
                 <div className="pt-6 space-y-4">
-                  {type === 'Solo' ? (
-                     <div className="flex flex-col items-center justify-center space-y-4">
-                        <p className="text-foreground font-semibold">Click to Pay</p>
-                        <Button asChild>
-                            <Link href="upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=30&cu=INR">
-                                Pay ₹30 for Solo (Open in UPI App)
-                            </Link>
-                        </Button>
-                     </div>
-                  ) : (
-                    <div className="flex flex-col items-center justify-center space-y-2">
-                        <p className="text-foreground font-semibold">Scan QR for Payment</p>
-                        <Image src={currentQrCode} alt={`${type} QR Code`} width={200} height={200} className="rounded-md border-2 border-primary" />
-                    </div>
-                  )}
+                  <div className="flex flex-col items-center justify-center space-y-4">
+                    {type === 'Solo' ? (
+                        <>
+                          <Button asChild>
+                              <Link href="upi://pay?pa=jayrajsinhchauhan999-1@okicici&pn=Jayraj&am=30&cu=INR">
+                                🔗 Pay ₹30 via UPI (opens UPI app)
+                              </Link>
+                          </Button>
+                          <p className="text-sm text-muted-foreground">OR</p>
+                          <p className="text-foreground font-semibold">Scan QR for Payment</p>
+                          <Image src={currentQrCode} alt="Solo QR Payment" width={200} height={200} className="rounded-md border-2 border-primary" />
+                        </>
+                    ) : (
+                      <>
+                          <p className="text-foreground font-semibold">Scan QR for Payment</p>
+                          <Image src={currentQrCode} alt={`${type} QR Code`} width={200} height={200} className="rounded-md border-2 border-primary" />
+                      </>
+                    )}
+                  </div>
 
                   <FormField
                       control={form.control}
