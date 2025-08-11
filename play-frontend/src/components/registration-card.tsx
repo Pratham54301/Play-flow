@@ -122,25 +122,55 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
     Duo: {
         amount: 60,
         upiId: '7777967668@upi',
-upiLink: 'upi://pay?pa=7777967668@upi&pn=Prathamkumar&am=30&cu=INR'
+        upiLink: 'upi://pay?pa=7777967668@upi&pn=Prathamkumar&am=60&cu=INR'
     },
     Squad: {
         amount: 100,
         upiId: '7777967668@upi',
-upiLink: 'upi://pay?pa=7777967668@upi&pn=Prathamkumar&am=30&cu=INR'
+        upiLink: 'upi://pay?pa=7777967668@upi&pn=Prathamkumar&am=100&cu=INR'
     },
   };
 
   const currentPayment = paymentDetails[type];
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const formData = new FormData();
+    formData.append("type", type);
+    formData.append("fullName", values.fullName);
+    formData.append("upiId", values.upiId);
+    formData.append("paymentMode", values.paymentMode);
+    if (values.utrNumber) formData.append("utrNumber", values.utrNumber);
+    if (values.cashCollectorName) formData.append("cashCollectorName", values.cashCollectorName);
+    formData.append("players", JSON.stringify(values.players));
+    if (values.screenshot instanceof File) {
+      formData.append("screenshot", values.screenshot);
+    }
 
-    toast({
-        title: "Form Submitted",
-        description: `Your ${type} registration has been received.`,
-    });
-    form.reset();
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+      const res = await fetch(`${baseUrl}/register`, {
+        method: "POST",
+        body: formData,
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || "Failed to submit");
+      }
+      const data = await res.json();
+      toast({
+        title: "Registration submitted",
+        description: `ID: ${data.id}`,
+      });
+      form.reset();
+      // Optionally navigate elsewhere
+      // router.push("/dashboard");
+    } catch (e: any) {
+      toast({
+        title: "Submission failed",
+        description: e.message || "Please try again",
+        variant: "destructive",
+      });
+    }
   }
 
   return (
