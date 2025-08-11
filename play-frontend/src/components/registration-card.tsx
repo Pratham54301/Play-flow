@@ -147,7 +147,8 @@ export default function RegistrationCard({ type }: RegistrationCardProps) {
     }
 
     try {
-      const res = await fetch("/api/register", {
+      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+      const res = await fetch(`${baseUrl}/register`, {
         method: "POST",
         body: formData,
       });
